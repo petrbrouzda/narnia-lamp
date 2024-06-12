@@ -35,9 +35,6 @@ Ovládání:
 
 #include <WiFi.h>
 
-#include <SPI.h>
-#include <Wire.h>
-
 /* Konfiguracni soubor na SPIFFS filesystemu. Urcite se to da resit jednoduseji, ale tohle mam hotove z jineho projeku. */
 #include "ConfigProvider.h"
 #include "src/ra/raConfig.h"
@@ -189,4 +186,11 @@ void loop() {
 }
 
 /*
+Using library AsyncTCP at version 1.1.1 in folder: C:\Users\brouzda\Documents\Arduino\libraries\AsyncTCP 
+Using library ESP Async WebServer at version 1.2.3 in folder: C:\Users\brouzda\Documents\Arduino\libraries\ESPAsyncWebServer 
+Using library FS at version 2.0.0 in folder: C:\Users\brouzda\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.11\libraries\FS 
+Using library WiFi at version 2.0.0 in folder: C:\Users\brouzda\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.11\libraries\WiFi 
+Using library Tasker at version 2.0.3 in folder: C:\Users\brouzda\Documents\Arduino\libraries\Tasker 
+Using library Adafruit NeoPixel at version 1.11.0 in folder: C:\Users\brouzda\Documents\Arduino\libraries\Adafruit_NeoPixel 
+Using library SPIFFS at version 2.0.0 in folder: C:\Users\brouzda\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.11\libraries\SPIFFS 
 */

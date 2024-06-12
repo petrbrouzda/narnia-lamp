@@ -49,6 +49,8 @@ void onRequestRezim1(AsyncWebServerRequest *request){
   logger->log( "* rezim 1");
 
   aktualniRezim = 1;
+  saveConfigData();
+  
   request->redirect("/");
 }
 
@@ -56,6 +58,8 @@ void onRequestRezim2(AsyncWebServerRequest *request){
   logger->log( "* rezim 2");
 
   aktualniRezim = 2;
+  saveConfigData();
+
   request->redirect("/");
 }
 
