@@ -22,24 +22,32 @@ const char paticka[] PROGMEM = R"rawliteral(
 
 const char* CONTENT_TYPE = "text/html; charset=utf-8";
 
+//TODO: male pismo na tlacitkach
+
 void onRequestStatus(AsyncWebServerRequest *request){
-  logger->log( "status");
+  logger->log( "* status");
 
   //Handle Unknown Request
   AsyncResponseStream *response = request->beginResponseStream(CONTENT_TYPE);
   response->print( hlavicka );
   response->print("<h2>Narnia lampa</h2>");
-  response->printf( "Rezim: %d", aktualniRezim );
+  response->printf( "<p>Rezim: %d</p>", aktualniRezim );
+
+  response->print("<p>Test</p>" );
 
   response->print("<form method=\"GET\" action=\"/rezim1\">");
   response->print("<input type=\"submit\" name=\"nastav\" value=\"režim 1\" >" );
   response->print("</form>" );
 
+  response->print("<p>Test</p>" );
+
   response->print("<form method=\"GET\" action=\"/rezim2\">");
   response->print("<input type=\"submit\" name=\"nastav\" value=\"režim 2\" >" );
   response->print("</form>" );
 
-  response->printf( "<br><i>Lokalni cas (sec od bootu): %d</i><br>", time(NULL) );
+  response->print("<p>Test</p>" );
+
+  response->printf( "<p>Lokalni cas (sec od bootu): %d</p>", time(NULL) );
 
   response->print( paticka );
   request->send(response);
@@ -50,7 +58,7 @@ void onRequestRezim1(AsyncWebServerRequest *request){
 
   aktualniRezim = 1;
   saveConfigData();
-  
+
   request->redirect("/");
 }
 
