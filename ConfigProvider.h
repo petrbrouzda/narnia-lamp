@@ -10,7 +10,6 @@
 // jmeno konfiguracniho souboru ve SPIFS
 #define CONFIG_FILE_NAME (char*)"/config2.ra"
 
-bool isConfigValid( raConfig * config );
 void loadConfig( raConfig * cfg );
 void saveConfig( raConfig * cfg );
 

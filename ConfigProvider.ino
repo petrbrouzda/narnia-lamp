@@ -4,20 +4,6 @@
   #include <SPIFFS.h>
 #endif
 
-bool isConfigValid( raConfig * cfg )
-{
-    if( 
-        NULL == cfg->getString( "wifi_ssid", NULL ) ||
-        NULL == cfg->getString( "$wifi_pass", NULL ) ||
-        NULL == cfg->getString( "ra_url", NULL ) ||
-        NULL == cfg->getString( "ra_dev_name", NULL ) ||
-        NULL == cfg->getString( "$ra_pass", NULL ) 
-    ) 
-        return false;
-    else
-        return true;
-}
-
 void loadConfig( raConfig * config )
 {
   // true na ESP32 = format on fail. Bez toho neprobehne prvotni incializace u ESP-32.
