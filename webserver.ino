@@ -104,14 +104,14 @@ const char part1a[] PROGMEM = R"rawliteral(
 <hr>
 <h3>Nastavení režimu</h3>
   
-  <p><b>Vypnuto</b></p>
+  <p><a name="0"></a><b>Vypnuto</b></p>
 
   <form method="GET" action="/rezim0">
   <input type="submit" name="nastav" value="Zhasni lampu" > 
   </form>
 
 <hr width="40%">
-  <p><b>Oheň</b></p>
+  <p><a name="1"></a><b>Oheň</b></p>
 
   <form method="GET" action="/rezim1">
 )rawliteral";
@@ -121,7 +121,7 @@ const char part1b[] PROGMEM = R"rawliteral(
   </form>
   
 <hr width="40%">
-  <p><b>Signál</b></p>
+  <p><a name="2"></a><b>Signál</b></p>
 
   <form method="GET" action="/rezim2">
 )rawliteral";
@@ -140,11 +140,11 @@ const char part1b[] PROGMEM = R"rawliteral(
 
 const char part2[] PROGMEM = R"rawliteral(
 </select>
-  <p><input type="submit" name="nastav" value="Blikej" > 
+  <p><input type="submit" name="nastav" value="Spusť signál" > 
   </form>  
 
 <hr width="40%">
-  <p><b>Morseovka</b></p>
+  <p><a name="3"></a><b>Morseovka</b></p>
 
   <form method="GET" action="/rezim3">
 )rawliteral";
@@ -183,7 +183,7 @@ void onRequestRezim0(AsyncWebServerRequest *request){
   aktualniRezim = 0;
   saveConfigData();
 
-  request->redirect("/");
+  request->redirect("/#0");
 }
 
 void onRequestRezim1(AsyncWebServerRequest *request){
@@ -203,7 +203,7 @@ void onRequestRezim1(AsyncWebServerRequest *request){
 
   tasker.setTimeout(fireAction, 1 );
 
-  request->redirect("/");
+  request->redirect("/#1");
 }
 
 void onRequestRezim2(AsyncWebServerRequest *request){
@@ -237,7 +237,7 @@ void onRequestRezim2(AsyncWebServerRequest *request){
 
   signalZacni( mode );
 
-  request->redirect("/");
+  request->redirect("/#2");
 }
 
 void onRequestRezim3(AsyncWebServerRequest *request){
@@ -281,7 +281,7 @@ void onRequestRezim3(AsyncWebServerRequest *request){
 
   morseZacni( text, speed );
 
-  request->redirect("/");
+  request->redirect("/#3");
 }
 
 void webserverBegin() 
