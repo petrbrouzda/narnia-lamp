@@ -83,7 +83,7 @@ void onRequestStatus(AsyncWebServerRequest *request){
   if( aktualniRezim==1 ) {
     response->printf( "<p>Oheň</p>" );
   }
-  if( aktualniRezim>1 ) {
+  if( aktualniRezim>0 ) {
     const char * barva;
     if( color==16777215 ) {
       barva = "bílá";
@@ -158,8 +158,8 @@ const char part2[] PROGMEM = R"rawliteral(
   	response->print("<p>Rychlost: <select name=\"speed\" > ");
 	    response->printf(" <option value=\"200\">2x rychleji</option> ");
 	    response->printf(" <option value=\"100\" selected>Standard</option> ");
-	    response->printf(" <option value=\"50\">50 %</option> ");
-	    response->printf(" <option value=\"25\">25 %</option> ");
+	    response->printf(" <option value=\"50\">50 %%</option> ");
+	    response->printf(" <option value=\"25\">25 %%</option> ");
 
       response->print("</select> <p><input type=\"submit\" name=\"nastav\" value=\"Vysílej\" ></form>");
   
