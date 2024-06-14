@@ -135,6 +135,7 @@ void loadConfigData() {
 
   aktualniRezim = (int) config.getLong( "rezim", 1 );
   color = (int) config.getLong( "color", 0xffffff );
+  brightness = (int) config.getLong( "jas", 128 );
   
 }
 
@@ -147,6 +148,9 @@ void saveConfigData() {
   
   sprintf( buf, "%d", color );
   config.setValue( "color", buf );
+
+  sprintf( buf, "%d", brightness );
+  config.setValue( "jas", buf );
 }
 
 
@@ -161,13 +165,13 @@ void setup(){
   logger = new raLogger( RA_LOG_MODE_SERIAL );
   logger->log( "raLogger started");
 
-  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
-  pixels.setBrightness(brightness);
-  
   config.setInfo( (char*)"-", (char*)RA_CONFIG_PASSPHRASE );
   loadConfig( &config );
   loadConfigData();
 
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels.setBrightness(brightness);
+  
   // adc4.attach(4);
 
   //WiFi.mode(WIFI_OFF);
