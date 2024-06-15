@@ -99,32 +99,6 @@ int aktualniRezim = 1;
 AsyncWebServer server(80);
 
 
-void OnWiFiEvent(WiFiEvent_t event)
-{
-  switch (event) {
- 
-    case SYSTEM_EVENT_STA_CONNECTED:
-      Serial.println("ESP32 Connected to WiFi Network");
-      break;
-    case SYSTEM_EVENT_AP_START:
-      Serial.println("ESP32 soft AP started");
-      break;
-    case SYSTEM_EVENT_AP_STACONNECTED:
-      Serial.println("Station connected to ESP32 soft AP");
-      break;
-    case SYSTEM_EVENT_AP_STADISCONNECTED:
-      Serial.println("Station disconnected from ESP32 soft AP");
-      break;
-    case SYSTEM_EVENT_AP_STAIPASSIGNED:
-      Serial.println("Station got IP");
-      break;
-    default: break;
-  }
-}
-
-
-// provozni hodnoty
-
 
 /** nacte konfiguraci ze souboru */
 void loadConfigData() {
@@ -171,7 +145,7 @@ void saveConfigData() {
 
 void setup(){
   Serial.begin(115200);
-  delay(500);
+  delay(2000);
   Serial.println( "Startuju" );
 
   logger = new raLogger( RA_LOG_MODE_SERIAL );
@@ -181,28 +155,24 @@ void setup(){
   loadConfig( &config );
   loadConfigData();
 
-  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels.begin(); 
   pixels.setBrightness(brightness);
-  
+  pixels.show();
+
   // adc4.attach(4);
 
-  //WiFi.mode(WIFI_OFF);
-  delay(1000);
   WiFi.softAPConfig(local_ip, gateway, subnet);
   delay(100);
   WiFi.softAP(ssid, password, 1, false );
   Serial.println("Wait 200 ms for AP_START...");
   delay(500);
   WiFi.softAPsetHostname(ssid);
-
   
   IPAddress myIP = WiFi.softAPIP();
   Serial.print("AP IP address: ");
   Serial.println(myIP);
 
   WiFi.softAPsetHostname(ssid);
-
-  WiFi.onEvent(OnWiFiEvent);
 
   webserverBegin();
   dnsServer.start(53, "*", WiFi.softAPIP());
