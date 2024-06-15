@@ -136,7 +136,19 @@ void loadConfigData() {
   aktualniRezim = (int) config.getLong( "rezim", 1 );
   color = (int) config.getLong( "color", 0xffffff );
   brightness = (int) config.getLong( "jas", 128 );
-  
+
+  if( aktualniRezim==1 ) {
+    tasker.setTimeout(fireAction, 1000 );
+  } else if( aktualniRezim==2 ) {
+    int signalMode = (int) config.getLong( "signalMode", 1 );
+    signalZacni( signalMode );
+  } else if( aktualniRezim==3 ) {
+    char morseText[200];
+    strncpy( morseText, config.getString( "morseText", "abcd"), 199 );
+    morseText[199] = 0;
+    int morseSpeed =  (int) config.getLong( "morseSpeed", 100 );
+    morseZacni( morseText, morseSpeed );
+  }
 }
 
 /** ulozi konfiguraci do souboru */

@@ -1,3 +1,6 @@
+/*
+POZOR! Webserver je odbavován asynchronně, nelze z něj proto volat přímo funkce neopixelů!
+*/
 
 const char hlavicka[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html>
