@@ -6,7 +6,9 @@
   #include "WiFi.h" 
   #include "driver/adc.h"
   #include <esp_wifi.h>
-  #include <esp_bt.h>
+  #ifdef X_ESP32_BT_PRESENT
+    #include <esp_bt.h>
+  #endif
   #include <Arduino.h>
 
   // https://www.savjee.be/2019/12/esp32-tips-to-increase-battery-life/
@@ -14,36 +16,20 @@
   {
       WiFi.disconnect(true);
       WiFi.mode(WIFI_OFF);
+  #ifdef X_ESP32_BT_PRESENT
       btStop();
+  #endif
     
-      adc_power_off();
-      // esp_wifi_stop();
+      #if ESP_ARDUINO_VERSION_MAJOR == 1 
+        adc_power_off();
+      #endif
+      
+  #ifdef X_ESP32_BT_PRESENT
       esp_bt_controller_disable();
+  #endif
       
       esp_sleep_enable_timer_wakeup( usec );
       esp_deep_sleep_start();
-  }
-  
-  void ra__LightSleep( long usec )
-  {
-      Serial.flush();
-      
-      /*
-      WiFi.disconnect(true);
-      WiFi.mode(WIFI_OFF);
-      btStop();
-    
-      adc_power_off();
-      esp_wifi_stop();
-      esp_bt_controller_disable();
-      */
-      
-      esp_sleep_enable_timer_wakeup( usec );
-      esp_light_sleep_start();
-      
-      /* 
-      adc_power_on(); 
-      */
   }
   
   // https://rweather.github.io/arduinolibs/RNG_8cpp_source.html

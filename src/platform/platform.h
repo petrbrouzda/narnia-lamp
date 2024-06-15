@@ -1,6 +1,8 @@
 #ifndef RA_PLATFORM_H
 #define RA_PLATFORM_H
 
+#include <Arduino.h>
+
 void ra__DeepSleep( long usec );
 int trng();
 
@@ -12,7 +14,13 @@ int trng();
 #endif    
 
 #ifdef ESP32
-    void ra__LightSleep( long usec );
+
+    #ifdef CONFIG_IDF_TARGET_ESP32S2
+	#define X_ESP32_BT_NOT_PRESENT
+    #else
+	#define X_ESP32_BT_PRESENT
+    #endif
+
 #endif
 
 #endif

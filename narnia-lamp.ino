@@ -10,6 +10,7 @@ https://github.com/me-no-dev/ESPAsyncWebServer/tree/master
 
 /**
 Nastaveni kompilace
+FQBN: esp32:esp32:esp32c3:CDCOnBoot=cdc,CPUFreq=80,FlashFreq=40,FlashMode=dio
 */
 
 
@@ -46,10 +47,11 @@ raLogger* logger;
 raConfig config;
 #define RA_CONFIG_PASSPHRASE "--------"
 
-/*
+#include "src/toolkit/map_double.h"
+
 #include <ESP32AnalogRead.h>
-ESP32AnalogRead adc4;
-*/
+ESP32AnalogRead adc;
+
 
 #include "Tasker.h"
 Tasker tasker;
@@ -68,13 +70,17 @@ IPAddress subnet(255,255,255,0);
 #include <Adafruit_NeoPixel.h>
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN        14 
+#define PIN        3 
 
 // How many NeoPixels are attached to the Arduino?
 
-#define NUMPIXELS 6
-//  The overall fire brightness
-//  (this can affect both color levels and power consumption)
+#define NUMPIXELS 10
+
+#define BATTERY_PIN 1
+
+#define BAT_LIMIT_1 3.2
+#define BAT_LIMIT_2 3.05
+
 int brightness = 128;
 bool brightnessChange = false;
 
@@ -141,6 +147,24 @@ void saveConfigData() {
 
 
 
+/**
+napeti baterie
+*/
+float uBat;
+
+float nactiVBat()
+{
+  float u1 = adc.readVoltage();
+  return u1 / (9600.0/(47000.0+9600.0));
+}
+
+
+void nactiBaterku() 
+{
+  float f = nactiVBat();
+  uBat = uBat*0.95 + f*0.05;
+}
+
 
 
 void setup(){
@@ -155,11 +179,18 @@ void setup(){
   loadConfig( &config );
   loadConfigData();
 
+  adc.attach(BATTERY_PIN);
+  uBat = nactiVBat();
+
+  if( uBat<BAT_LIMIT_2 && uBat>1.0 )  {
+    logger->log( "malo baterky ");
+    ra__DeepSleep( 2000L * 1000000L );
+  }
+
   pixels.begin(); 
   pixels.setBrightness(brightness);
   pixels.show();
 
-  // adc4.attach(4);
 
   WiFi.softAPConfig(local_ip, gateway, subnet);
   delay(100);
@@ -177,7 +208,7 @@ void setup(){
   webserverBegin();
   dnsServer.start(53, "*", WiFi.softAPIP());
 
-  // tasker.setInterval(vypisStav, 5000);
+  tasker.setInterval(nactiBaterku, 100 );
 }
 
 
@@ -193,7 +224,15 @@ void rozsvit() {
     pixels.show();
 }
 
+
+void doRestart()
+{
+    ESP.restart();
+}
+
 bool rozsviceno = false;
+
+bool shutdownStarted = false;
 
 void loop() {
   if( brightnessChange ) {
@@ -214,6 +253,23 @@ void loop() {
 
   if( config.isDirty() ) {
     saveConfig( &config );
+  }
+
+  // pokud jedeme z USB, je uBat=0
+  if( (uBat>1.0) && (uBat < BAT_LIMIT_1) ) {
+    if( aktualniRezim!=0 ) {
+      logger->log( "Malo baterky, zhasinam" );
+      clearTimers();
+      aktualniRezim=0;
+      rozsviceno = true;
+    }
+  }
+
+  if( (uBat>1.0) && (uBat < BAT_LIMIT_2) && !shutdownStarted ) {
+    logger->log( "restart" );
+    // aby se mezi tim stihly zhasnout svetla, pokud sviti
+    tasker.setTimeout( doRestart, 2000 );
+    shutdownStarted = true;
   }
 
   dnsServer.processNextRequest();

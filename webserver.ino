@@ -78,7 +78,11 @@ void onRequestStatus(AsyncWebServerRequest *request){
   AsyncResponseStream *response = request->beginResponseStream(CONTENT_TYPE);
   response->print( hlavicka );
 
+  int pct = (int) map_double(uBat, 3.1, 4.2, 0, 100);
+  response->printf( "<p>Baterka: %.2f V, %d %%<br>", uBat, pct );
+
   response->printf( "<p>Režim: %d</p>", aktualniRezim );
+
 
   if( aktualniRezim==3 ) {
     response->printf( "<p>Morseovka [<b>%s</b>], pozice %d/%d, pocet odeslani: %d.</p>", morseText, morseSrcPos+1, strlen(morseText), pocetVysilani );
