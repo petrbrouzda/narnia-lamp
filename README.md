@@ -7,6 +7,7 @@ Ovládá se přes WiFi.
 Umí následující kouzla:
 * hořící oheň (nastavitelný jas)
 * stálé svícení (nastavitelná barva a jas)
+* blikání pomalé či rychlé (nastavitelná barva a jas)
 * vysílání morseovky (nastavitelná barva, jas a rychlost)
 
 Pamatuje si poslední nastavený režim; po restartu pokračuje ve stejném režimu.
