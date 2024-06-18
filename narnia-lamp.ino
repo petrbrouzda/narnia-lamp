@@ -94,10 +94,10 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 
 /**
+0 = vypnuto
 1 = ohen
-2 = morzeovka
-3 = konstantni barva
-4 = blikani
+2 = konstantni barva / blikani
+3 = morseovka
 */
 int aktualniRezim = 1;
 
