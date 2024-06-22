@@ -14,3 +14,6 @@ Pamatuje si poslední nastavený režim; po restartu pokračuje ve stejném rež
 
 Předpokládá napájení z lithiového článku, měří napětí akumulátoru a pokud je pod limitem, zhasne led pásek. Pokud je pod ještě nižším limitem, vypne i ESP.
 (Pokud není na analogový vstup nic připojeno, běží bez problémů.)
+
+Více info: https://x.com/pebr0u/status/1802779062751932639
+a https://x.com/pebr0u/status/1803665331598270571
