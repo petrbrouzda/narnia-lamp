@@ -7,12 +7,15 @@ Ovládá se přes WiFi.
 Umí následující kouzla:
 * hořící oheň (nastavitelný jas)
 * stálé svícení (nastavitelná barva a jas)
+* blikání pomalé či rychlé (nastavitelná barva a jas)
 * vysílání morseovky (nastavitelná barva, jas a rychlost)
 
 Pamatuje si poslední nastavený režim; po restartu pokračuje ve stejném režimu.
 
 Předpokládá napájení z lithiového článku, měří napětí akumulátoru a pokud je pod limitem, zhasne led pásek. Pokud je pod ještě nižším limitem, vypne i ESP.
 (Pokud není na analogový vstup nic připojeno, běží bez problémů.)
+
+Více info: https://x.com/pebr0u/status/1802779062751932639 a https://x.com/pebr0u/status/1803665331598270571
 
 Aktualizovaná verze projektu je zde:
 https://github.com/petrbrouzda/taborova_lucerna
