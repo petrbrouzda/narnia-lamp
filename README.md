@@ -13,3 +13,6 @@ Pamatuje si poslední nastavený režim; po restartu pokračuje ve stejném rež
 
 Předpokládá napájení z lithiového článku, měří napětí akumulátoru a pokud je pod limitem, zhasne led pásek. Pokud je pod ještě nižším limitem, vypne i ESP.
 (Pokud není na analogový vstup nic připojeno, běží bez problémů.)
+
+Aktualizovaná verze projektu je zde:
+https://github.com/petrbrouzda/taborova_lucerna
